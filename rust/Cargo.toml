@@ -1,0 +1,26 @@
+[package]
+name = "raskladka-engine"
+version = "1.0.0"
+edition = "2021"
+description = "Расчёт веса блюд, выхода, меню и закупок"
+license = "MIT"
+authors = ["Раскладка"]
+
+[lib]
+name = "raskladka_engine"
+path = "src/lib.rs"
+
+[[bin]]
+name = "raskladka-engine"
+path = "src/bin/raskladka.rs"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "2.0"
+chrono = { version = "0.4", features = ["serde"] }
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
