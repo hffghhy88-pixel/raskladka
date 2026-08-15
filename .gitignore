@@ -1,0 +1,11 @@
+﻿node_modules/
+dist/
+dist-electron/
+target/
+*.log
+.DS_Store
+Thumbs.db
+release/
+.idea/
+*.local
+build/icon-source.jpg
