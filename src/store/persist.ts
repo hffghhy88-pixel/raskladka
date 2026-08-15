@@ -2,6 +2,17 @@ import type { Workspace } from "../types/models";
 import { createSeedWorkspace } from "../data/seed";
 
 const STORAGE_KEY = "raskladka.workspace.v1";
+const SIMPLE_KEY = "raskladka.simple.v1";
+
+export function loadSimpleMode(): boolean {
+  const raw = localStorage.getItem(SIMPLE_KEY);
+  if (raw === null) return true;
+  return raw === "1";
+}
+
+export function saveSimpleMode(on: boolean): void {
+  localStorage.setItem(SIMPLE_KEY, on ? "1" : "0");
+}
 
 export function loadWorkspace(): Workspace {
   try {
