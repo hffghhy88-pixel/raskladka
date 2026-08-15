@@ -1,0 +1,11 @@
+{
+  "files.encoding": "utf8",
+  "editor.formatOnSave": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/target": true,
+    "**/dist": true,
+    "**/dist-electron": true
+  }
+}

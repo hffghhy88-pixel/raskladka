@@ -1,0 +1,24 @@
+pub mod calc;
+pub mod cost;
+pub mod dish;
+pub mod engine;
+pub mod error;
+pub mod inventory;
+pub mod menu;
+pub mod nutrition;
+pub mod product;
+pub mod production;
+pub mod quantity;
+pub mod report;
+pub mod scale;
+pub mod search;
+pub mod shopping;
+pub mod tech_card;
+pub mod units;
+pub mod validate;
+pub mod workspace;
+pub mod yield_table;
+
+pub use engine::{execute, execute_bundle, execute_json, Command, EngineResponse};
+pub use error::{Error, Result};
+pub use workspace::Workspace;
