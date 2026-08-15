@@ -85,7 +85,12 @@ app.whenReady().then(() => {
     const win = BrowserWindow.getFocusedWindow();
     const saveOpts = {
       defaultPath: suggested,
-      filters: [{ name: "JSON", extensions: ["json"] }, { name: "Markdown", extensions: ["md"] }],
+      filters: [
+        { name: "Все файлы", extensions: ["json", "csv", "md", "html"] },
+        { name: "JSON", extensions: ["json"] },
+        { name: "Excel CSV", extensions: ["csv"] },
+        { name: "Markdown", extensions: ["md"] },
+      ],
     };
     const result = win ? await dialog.showSaveDialog(win, saveOpts) : await dialog.showSaveDialog(saveOpts);
     if (result.canceled || !result.filePath) return { ok: false };
