@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { shoppingFromMenu } from "../domain/shopping";
+import { printHtml, saveTextFile, shoppingPrintHtml, shoppingToCsv } from "../domain/exportDocs";
 import { formatMassGrams, formatMoney } from "../domain/units";
 import { useWorkspace } from "../store/context";
 import { PageHead, Stat } from "../components/ui";
@@ -36,6 +37,24 @@ export function ShoppingPage() {
           <input type="checkbox" checked={onlyBuy} onChange={(e) => setOnlyBuy(e.target.checked)} />
           только докупить
         </label>
+        <button
+          className="btn"
+          onClick={() => {
+            if (!list || !menu) return;
+            printHtml("Покупки", shoppingPrintHtml(list, menu.name));
+          }}
+        >
+          Печать / PDF
+        </button>
+        <button
+          className="btn"
+          onClick={() => {
+            if (!list) return;
+            void saveTextFile("pokupki.csv", shoppingToCsv(list));
+          }}
+        >
+          В Excel
+        </button>
         <button
           className="btn"
           onClick={() => {

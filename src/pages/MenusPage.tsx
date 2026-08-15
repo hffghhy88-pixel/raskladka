@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createId } from "../domain/ids";
 import { MEAL_KINDS, MEAL_LABEL } from "../domain/labels";
 import { calcMenu, emptyMenu } from "../domain/menuCalc";
+import { menuPrintHtml, menuToCsv, printHtml, saveTextFile } from "../domain/exportDocs";
 import { formatMassGrams, formatMoney } from "../domain/units";
 import { useWorkspace } from "../store/context";
 import { PageHead, WeightStrip } from "../components/ui";
@@ -14,6 +15,26 @@ export function MenusPage() {
   return (
     <>
       <PageHead title="Меню" hint="Соберите дни и приёмы пищи — вес продуктов посчитается сам">
+        <button
+          className="btn"
+          onClick={() => {
+            if (!selected) return;
+            const nameOf = (id: string) => workspace.dishes.find((d) => d.id === id)?.name ?? id;
+            printHtml(selected.name, menuPrintHtml(selected, nameOf));
+          }}
+        >
+          Печать / PDF
+        </button>
+        <button
+          className="btn"
+          onClick={() => {
+            if (!selected) return;
+            const nameOf = (id: string) => workspace.dishes.find((d) => d.id === id)?.name ?? id;
+            void saveTextFile("menu.csv", menuToCsv(selected, nameOf));
+          }}
+        >
+          В Excel
+        </button>
         <button
           className="btn primary"
           onClick={() => {

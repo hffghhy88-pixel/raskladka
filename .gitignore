@@ -9,3 +9,5 @@ release/
 .idea/
 *.local
 build/icon-source.jpg
+pokupki.csv
+menu.csv

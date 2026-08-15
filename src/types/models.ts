@@ -209,6 +209,8 @@ export interface Dish {
   finishingLossPercent: number;
   evaporationG: number;
   archived: boolean;
+  /** Сжатое фото блюда (data URL), чтобы отличать позиции глазами. */
+  imageDataUrl?: string;
 }
 
 export interface MenuSlot {
@@ -445,6 +447,8 @@ export interface ValidationReport {
 }
 
 export type RouteId =
+  | "simple"
+  | "cookfrom"
   | "today"
   | "products"
   | "dishes"

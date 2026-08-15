@@ -1,6 +1,6 @@
 {
   "name": "raskladka",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "Десктоп-приложение для расчёта веса блюд, продуктов и составления меню",
   "author": "Раскладка",
@@ -38,11 +38,15 @@
       "target": [
         {
           "target": "nsis",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         },
         {
           "target": "zip",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         }
       ]
     },
@@ -55,7 +59,9 @@
       "createStartMenuShortcut": true,
       "shortcutName": "Раскладка",
       "uninstallDisplayName": "Раскладка",
-      "installerLanguages": ["ru_RU"],
+      "installerLanguages": [
+        "ru_RU"
+      ],
       "language": "1049",
       "deleteAppDataOnUninstall": false
     }
@@ -65,11 +71,12 @@
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
-    "@types/node": "^24.3.0",
+    "@types/node": "^24.13.3",
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^5.0.2",
-    "electron": "^37.3.1",
+    "electron": "^37.10.3",
+    "electron-builder": "^26.15.3",
     "typescript": "^5.9.2",
     "vite": "^7.1.5",
     "vite-plugin-electron": "^0.29.0",

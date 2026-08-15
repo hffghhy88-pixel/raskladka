@@ -9,10 +9,12 @@ import {
 } from "react";
 import type { Dish, Menu, Product, RouteId, StockItem, Workspace } from "../types/models";
 import { createId } from "../domain/ids";
-import { importWorkspace, loadWorkspace, resetWorkspace, saveWorkspace } from "./persist";
+import { importWorkspace, loadSimpleMode, loadWorkspace, resetWorkspace, saveSimpleMode, saveWorkspace } from "./persist";
 
 interface WorkspaceApi {
   workspace: Workspace;
+  simpleMode: boolean;
+  setSimpleMode: (on: boolean) => void;
   route: RouteId;
   selectedProductId?: string;
   selectedDishId?: string;
@@ -40,7 +42,14 @@ const Ctx = createContext<WorkspaceApi | null>(null);
 
 export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const [workspace, setWorkspace] = useState<Workspace>(() => loadWorkspace());
-  const [route, setRoute] = useState<RouteId>("today");
+  const [simpleMode, setSimpleModeState] = useState<boolean>(() => loadSimpleMode());
+  const [route, setRoute] = useState<RouteId>(() => (loadSimpleMode() ? "simple" : "today"));
+
+  const setSimpleMode = useCallback((on: boolean) => {
+    saveSimpleMode(on);
+    setSimpleModeState(on);
+    setRoute(on ? "simple" : "today");
+  }, []);
   const [selectedProductId, selectProduct] = useState<string | undefined>();
   const [selectedDishId, selectDish] = useState<string | undefined>();
   const [selectedMenuId, selectMenu] = useState<string | undefined>();
@@ -148,6 +157,8 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
   const api = useMemo<WorkspaceApi>(
     () => ({
       workspace,
+      simpleMode,
+      setSimpleMode,
       route,
       selectedProductId,
       selectedDishId,
@@ -172,6 +183,8 @@ export function WorkspaceProvider({ children }: { children: ReactNode }) {
     }),
     [
       workspace,
+      simpleMode,
+      setSimpleMode,
       route,
       selectedProductId,
       selectedDishId,

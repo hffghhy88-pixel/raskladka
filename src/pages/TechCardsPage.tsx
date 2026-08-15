@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { makeCostCard } from "../domain/cost";
+import { printHtml, techCardPrintHtml } from "../domain/exportDocs";
 import { makeTechCard, techCardMarkdown } from "../domain/techCard";
 import { useWorkspace } from "../store/context";
 import { PageHead } from "../components/ui";
@@ -41,8 +42,14 @@ export function TechCardsPage() {
           <span>Порций</span>
           <input type="number" value={portions} onChange={(e) => setPortions(Number(e.target.value))} />
         </label>
-        <button className="btn" onClick={() => window.print()}>
-          Печать
+        <button
+          className="btn"
+          onClick={() => {
+            if (!card) return;
+            printHtml(card.title, techCardPrintHtml(card));
+          }}
+        >
+          Печать / PDF
         </button>
         <button
           className="btn"

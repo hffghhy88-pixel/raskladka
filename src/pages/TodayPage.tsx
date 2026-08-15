@@ -24,7 +24,13 @@ export function TodayPage() {
   return (
     <>
       <PageHead title="Сегодня на кухне" hint={workspace.title}>
-        <button className="btn primary" onClick={() => setRoute("menus")}>
+        <button className="btn primary" onClick={() => setRoute("simple")}>
+          Просто посчитать
+        </button>
+        <button className="btn" onClick={() => setRoute("cookfrom")}>
+          Из запасов
+        </button>
+        <button className="btn" onClick={() => setRoute("menus")}>
           Открыть меню
         </button>
       </PageHead>

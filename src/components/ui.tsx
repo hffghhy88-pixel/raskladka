@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { formatMassGrams, formatMoney } from "../domain/units";
-import type { WeightTriple } from "../types/models";
+import type { Dish, WeightTriple } from "../types/models";
 
 export function PageHead({
   title,
@@ -65,4 +65,11 @@ export function Money({ value }: { value: number }) {
 
 export function Empty({ text }: { text: string }) {
   return <p className="muted">{text}</p>;
+}
+
+export function DishPhoto({ dish }: { dish: Dish }) {
+  if (dish.imageDataUrl) {
+    return <img className="dish-photo" src={dish.imageDataUrl} alt="" />;
+  }
+  return <div className="dish-photo placeholder">{dish.name.slice(0, 1)}</div>;
 }

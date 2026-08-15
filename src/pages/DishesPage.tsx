@@ -10,6 +10,7 @@ import {
   HOT_PROCESSES,
 } from "../domain/labels";
 import { formatNutrition } from "../domain/nutrition";
+import { readImageAsDataUrl } from "../domain/image";
 import { ALL_UNITS, formatMassGrams, formatMoney, unitCode } from "../domain/units";
 import { useWorkspace } from "../store/context";
 import { PageHead, WeightStrip } from "../components/ui";
@@ -113,6 +114,21 @@ function DishEditor({
         <label className="field wide">
           <span>Название</span>
           <input value={draft.name} onChange={(e) => setDraft({ ...draft, name: e.target.value })} />
+        </label>
+        <label className="field wide">
+          <span>Фото блюда</span>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (!file) return;
+              void readImageAsDataUrl(file).then((imageDataUrl) => setDraft((d) => ({ ...d, imageDataUrl })));
+            }}
+          />
+          {draft.imageDataUrl ? (
+            <img src={draft.imageDataUrl} alt="" className="dish-photo" style={{ marginTop: 8 }} />
+          ) : null}
         </label>
         <label className="field">
           <span>Категория</span>

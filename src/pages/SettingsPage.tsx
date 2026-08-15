@@ -6,7 +6,7 @@ import { useWorkspace } from "../store/context";
 import { PageHead } from "../components/ui";
 
 export function SettingsPage() {
-  const { workspace, setTitle, setCost, reset, importJson } = useWorkspace();
+  const { workspace, setTitle, setCost, reset, importJson, simpleMode, setSimpleMode } = useWorkspace();
   const [rust, setRust] = useState<RustStatus>({ available: false, path: null });
   const [rustLog, setRustLog] = useState("");
   const report = validateWorkspace(workspace.products, workspace.dishes, workspace.menus);
@@ -24,6 +24,10 @@ export function SettingsPage() {
           <label className="field">
             <span>Название</span>
             <input value={workspace.title} onChange={(e) => setTitle(e.target.value)} />
+          </label>
+          <label className="row" style={{ marginTop: 12 }}>
+            <input type="checkbox" checked={simpleMode} onChange={(e) => setSimpleMode(e.target.checked)} />
+            простой режим (крупные кнопки, меньше разделов)
           </label>
           <div className="form-grid" style={{ marginTop: 12 }}>
             <label className="field">
@@ -51,16 +55,24 @@ export function SettingsPage() {
               />
             </label>
           </div>
-          <div className="row" style={{ marginTop: 16 }}>
+          <h3 style={{ marginTop: 22 }}>Копия на флешку</h3>
+          <p className="muted">Сохраните кухню файлом. Потом можно открыть на другом компьютере.</p>
+          <div className="row" style={{ marginTop: 10 }}>
             <button
-              className="btn"
+              className="btn primary"
               onClick={() => {
                 const json = exportWorkspace(workspace);
-                if (window.raskladka) void window.raskladka.saveFile("raskladka.json", json);
-                else void navigator.clipboard.writeText(json);
+                if (window.raskladka) void window.raskladka.saveFile("raskladka-kopiya.json", json);
+                else {
+                  const blob = new Blob([json], { type: "application/json" });
+                  const a = document.createElement("a");
+                  a.href = URL.createObjectURL(blob);
+                  a.download = "raskladka-kopiya.json";
+                  a.click();
+                }
               }}
             >
-              Экспорт JSON
+              Сохранить на флешку
             </button>
             <button
               className="btn"
@@ -68,10 +80,20 @@ export function SettingsPage() {
                 if (window.raskladka) {
                   const file = await window.raskladka.openFile();
                   if (file.ok && file.contents) importJson(file.contents);
+                  return;
                 }
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = ".json,application/json";
+                input.onchange = () => {
+                  const file = input.files?.[0];
+                  if (!file) return;
+                  void file.text().then((raw) => importJson(raw));
+                };
+                input.click();
               }}
             >
-              Импорт
+              Открыть с флешки
             </button>
             <button className="btn danger" onClick={reset}>
               Сбросить к демо

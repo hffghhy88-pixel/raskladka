@@ -97,6 +97,8 @@ export const MEAL_LABEL: Record<MealKind, string> = {
 };
 
 export const ROUTE_META: Record<RouteId, { title: string; hint: string }> = {
+  simple: { title: "Просто", hint: "люди → блюда → покупки" },
+  cookfrom: { title: "Из запасов", hint: "что можно приготовить" },
   today: { title: "Сегодня", hint: "сводка кухни" },
   products: { title: "Продукты", hint: "справочник сырья" },
   dishes: { title: "Блюда", hint: "техкарты и закладка" },
